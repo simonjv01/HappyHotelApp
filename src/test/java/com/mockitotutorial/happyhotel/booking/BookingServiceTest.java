@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.mock;
@@ -57,9 +59,13 @@ class BookingServiceTest {
 
     @Test
     void getAvailablePlaceCountWhenMultipleRoomsAvailable() {
+        List<Room> roomList = new ArrayList<>();
+        roomList.add(new Room("Room 1", 2));
+        roomList.add(new Room("Room 2", 4));
+        roomList.add(new Room("Room 3", 6));
         // given
-        when(this.roomServiceMock.getAvailableRooms()).thenReturn(Collections.singletonList(new Room("Room 1", 2)));
-        int expected = 2;
+        when(this.roomServiceMock.getAvailableRooms()).thenReturn(roomList);
+        int expected = 12;
         // when
         int actual = bookingService.getAvailablePlaceCount();
         // then
