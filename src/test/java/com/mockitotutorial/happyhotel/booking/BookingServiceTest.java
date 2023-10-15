@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,13 +60,14 @@ class BookingServiceTest {
 
     @Test
     void getAvailablePlaceCountWhenMultipleRoomsAvailable() {
-        List<Room> roomList = new ArrayList<>();
-        roomList.add(new Room("Room 1", 2));
-        roomList.add(new Room("Room 2", 4));
-        roomList.add(new Room("Room 3", 6));
+        // List<Room> roomList = new ArrayList<>();
+        // roomList.add(new Room("Room 1", 2));
+        // roomList.add(new Room("Room 2", 4));
+        // roomList.add(new Room("Room 3", 6));
         // given
-        when(this.roomServiceMock.getAvailableRooms()).thenReturn(roomList);
-        int expected = 12;
+        List<Room> rooms = Arrays.asList(new Room("Roome 1",2), new Room("Room 2",4 ));
+        when(this.roomServiceMock.getAvailableRooms()).thenReturn(rooms);
+        int expected = 6;
         // when
         int actual = bookingService.getAvailablePlaceCount();
         // then
