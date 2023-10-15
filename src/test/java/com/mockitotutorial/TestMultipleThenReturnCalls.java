@@ -1,10 +1,12 @@
 package com.mockitotutorial;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -42,18 +44,22 @@ public class TestMultipleThenReturnCalls {
     
 
         @Test
-    void getAvailablePlaceCountWhenMultipleRoomsAvailable() {
-        // List<Room> roomList = new ArrayList<>();
-        // roomList.add(new Room("Room 1", 2));
-        // roomList.add(new Room("Room 2", 4));
-        // roomList.add(new Room("Room 3", 6));
+    void should_CountAvailablePlaces_When_CalledMultipleTimes() {
+
         // given
-        List<Room> rooms = Arrays.asList(new Room("Roome 1",2), new Room("Room 2",4 ));
-        when(this.roomServiceMock.getAvailableRooms()).thenReturn(rooms);
-        int expected = 6;
+        when(this.roomServiceMock.getAvailableRooms())
+        .thenReturn(Collections.singletonList(new Room("Room 1",5)))
+        .thenReturn(Collections.emptyList());
+        int expectedFirstCall = 5;
+        int expectedSecondCall = 0;
         // when
-        int actual = bookingService.getAvailablePlaceCount();
+        int actualFirst = bookingService.getAvailablePlaceCount();
+        int actualSecond = bookingService.getAvailablePlaceCount();
         // then
-        assertEquals(expected, actual);
+        assertAll(
+            () -> assertEquals(expectedFirstCall, actualFirst),
+            () -> assertEquals(expectedSecondCall, actualSecond));
+
+      
     }
 }
